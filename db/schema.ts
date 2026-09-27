@@ -1,0 +1,5 @@
+import { index, integer, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+export const classes=sqliteTable('classes',{id:text('id').primaryKey(),name:text('name').notNull(),subject:text('subject').notNull(),band:text('band').notNull(),message:text('message').notNull().default(''),active:integer('active').notNull().default(1)});
+export const submissions=sqliteTable('submissions',{id:text('id').primaryKey(),name:text('name').notNull(),birthday:text('birthday').notNull(),phone:text('phone').notNull().default(''),teacherId:text('teacher_id').notNull(),teacherName:text('teacher_name').notNull(),subject:text('subject').notNull(),createdAt:text('created_at').notNull(),editToken:text('edit_token').notNull().default(''),status:text('status').notNull().default('completed')},table=>[index('idx_submissions_created_id').on(table.createdAt,table.id)]);
+export const sessions=sqliteTable('sessions',{token:text('token').primaryKey(),expires:integer('expires').notNull()});
+export const attempts=sqliteTable('attempts',{ip:text('ip').primaryKey(),count:integer('count').notNull(),reset:integer('reset').notNull()});
