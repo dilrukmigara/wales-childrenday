@@ -10,8 +10,7 @@ export function sameOrigin(r:Request){
   return origin===`${protocol}://${host}`;
 }
 export async function digest(value:string){const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value));return Array.from(new Uint8Array(b),x=>x.toString(16).padStart(2,'0')).join('')}
-export async function admin(r:Request){const token=r.headers.get('cookie')?.match(/(?:^|;\s*)wales_admin=([^;]+)/)?.[1];if(!token)return false;return !!await db().prepare('SELECT token FROM sessions WHERE token = ? AND expires > ?').bind(await digest(token),Date.now()).first()}
+export async function admin(r:Request){const token=r.headers.get('cookie')?.match(/(?:^|;\s*)wales_admin=([^;]+)/)?.[1];return token ? db().session(await digest(token),Date.now()) : false}
 export function cookie(r:Request,token:string,maxAge=28800){return `wales_admin=${token}; HttpOnly; SameSite=Strict; Path=/; Max-Age=${maxAge}${new URL(r.url).protocol==='https:'?'; Secure':''}`}
 export function secret(){return adminPassword()}
 export async function safe(fn:()=>Promise<Response>){try{return await fn()}catch(e){console.error('Wales request failed',e);return json({error:'We could not connect right now. Please try again.'},503)}}
-export async function seed(){await db().prepare('INSERT OR IGNORE INTO classes (id,name,subject,band,message,active) VALUES (?,?,?,?,?,1)').bind('example-pradeep','Pradeep Madushan sir','Science','junior','').run()}
