@@ -1,6 +1,6 @@
 # Wales Children’s Day
 
-Next.js / React website hosted on Vercel with a Supabase PostgreSQL database. Students enter their name and contact number, choose a teacher and download one of three personalized card designs. `/admin` manages classes and shows every student entry, including unfinished visits, through pagination.
+Next.js / React website hosted on Vercel with a Supabase PostgreSQL database. Students enter their name and contact number, choose a teacher, open a personalized animated envelope and download their letter in one of three designs. The opened letter includes optional links to Wales Facebook, TikTok and Instagram pages. `/admin` manages classes and shows every student entry, including unfinished visits, through pagination.
 
 ## Supabase setup
 
